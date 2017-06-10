@@ -2,11 +2,11 @@
 
 #include "module_under_test.h"
 
-// compile time test hook (broadening of API)
+// compile time test hook:
+// test build -> undefine static to allow making entities public in public header file
 #ifdef TEST
   #define static
 #endif
-// single instance module with dynamic memory allocation for its data
 
 typedef struct {
   int public_data;
@@ -16,7 +16,8 @@ typedef struct {
 // persistent single instance data
 static module_data_type module_data;
 
-// "static" function prototypes for private functions in production
+// compile time test hook:
+// production build -> "static" function prototypes for private functions
 #ifndef TEST
   static int PrivateFunction(int multiplicand);
   static void PrivateDataSetter(int value);
