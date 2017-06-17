@@ -2,6 +2,19 @@
 
 Testability pattern examples in C (cmake, gtest).
 
+## Usage
+
+setup tools
+
+    ./setup.sh
+
+build and run unit tests of example (here "testable single instance module")
+
+    cd testable-single-instance-module/build
+    cmake ..
+    make unit_tests
+    ./unit_tests
+
 ## Testable Single Instance Module
 
 Used concepts:
