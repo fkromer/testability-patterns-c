@@ -5,9 +5,19 @@
 
 #include <stdlib.h>
 
-// compile time test code side test hook
+// compile time test hook:
+// test build -> allow access to private interface
+// production build -> hide private interface in private source file
 #ifdef TEST
+  typedef struct {
+    int public_data;
+    int private_data;
+  } module_data_type;
+
   extern int PrivateFunction(int multiplicand);
+  extern void SetModuleData();
+  extern void ModuleDataSetter(module_data_type data);
+  extern module_data_type ModuleDataGetter(void);
   extern void PrivateDataSetter(int value);
   extern int PrivateDataGetter();
 #endif  // TEST

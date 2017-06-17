@@ -8,10 +8,15 @@
   #define static
 #endif
 
-typedef struct {
-  int public_data;
-  int private_data;
-} module_data_type;
+// compile time test hook:
+// production build -> declare in private source file
+// test build -> declare in public header to allow accessing whole module state
+#ifndef TEST
+  typedef struct {
+    int public_data;
+    int private_data;
+  } module_data_type;
+#endif
 
 // persistent single instance data
 static module_data_type module_data;
@@ -20,6 +25,8 @@ static module_data_type module_data;
 // production build -> "static" function prototypes for private functions
 #ifndef TEST
   static int PrivateFunction(int multiplicand);
+  static void ModuleDataSetter(module_data_type data);
+  static module_data_type ModuleDataSetter(void);
   static void PrivateDataSetter(int value);
   static int PrivateDataGetter(void);
 #endif
@@ -48,6 +55,15 @@ int PublicFunction(int multiplicand) {
   int multiplier = 42;
   module_data.private_data = PrivateFunction(1);
   return multiplier*multiplicand;
+}
+
+void ModuleDataSetter(module_data_type data) {
+  module_data = data;
+  return;
+}
+
+module_data_type ModuleDataGetter(void) {
+  return module_data;
 }
 
 void PrivateDataSetter(int value) {
