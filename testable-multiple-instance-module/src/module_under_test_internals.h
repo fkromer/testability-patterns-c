@@ -1,0 +1,12 @@
+// Copyright (C) 2017 Florian Kromer - MIT
+
+#ifndef TESTABLE_MULTIPLE_INSTANCE_MODULE_SRC_MODULE_UNDER_TEST_INTERNALS_H_
+#define TESTABLE_MULTIPLE_INSTANCE_MODULE_SRC_MODULE_UNDER_TEST_INTERNALS_H_
+
+#include <stdlib.h>
+
+#ifdef TEST
+  extern int PrivateFunction(int multiplicand);
+#endif  // TEST
+
+#endif  // TESTABLE_MULTIPLE_INSTANCE_MODULE_SRC_MODULE_UNDER_TEST_INTERNALS_H_
