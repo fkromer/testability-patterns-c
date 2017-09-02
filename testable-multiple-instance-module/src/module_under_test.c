@@ -2,8 +2,13 @@
 
 #include "module_under_test.h"
 
-#ifdef TEST
-  #define static  // compile time change of "private" to "public"
+// compile time test hook:
+// production build -> hide private interface in private source file
+// test build -> allow access to private interface
+#ifndef TEST
+//  static void PrivateMemberSetter(pointer_to_instance_data, int value);
+//  static int PrivateMemberGetter(pointer_to_instance_data);
+  static int PrivateFunction(int multiplicand);
 #endif
 
 struct instance_data_type {
@@ -41,7 +46,16 @@ int PublicFunction(pointer_to_instance_data self, int multiplicand) {
   return multiplier*multiplicand;
 }
 
-static int PrivateFunction(int multiplicand) {
+//void PrivateMemberSetter(pointer_to_instance_data self, int value) {
+//  self->private_member = value;
+//  return;
+//}
+
+//int PrivateMemberGetter(pointer_to_instance_data self) {
+//  return self->private_member;
+//}
+
+int PrivateFunction(int multiplicand) {
   int multiplier = 42;
   return multiplier*multiplicand;
 }
